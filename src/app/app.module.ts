@@ -8,6 +8,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { TelaLoginComponent } from './components/tela-login/tela-login.component';
 import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
 import { ListagemVisitasComponent } from './components/listagem-visitas/listagem-visitas.component';
+import { CadastroVisitanteComponent } from './components/cadastro-visitante/cadastro-visitante.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ListagemVisitasComponent } from './components/listagem-visitas/listagem
     RegistroComponent,
     TelaLoginComponent,
     CadastroVisitasComponent,
-    ListagemVisitasComponent
+    ListagemVisitasComponent,
+    CadastroVisitanteComponent,
   ],
   imports: [
     BrowserModule,
