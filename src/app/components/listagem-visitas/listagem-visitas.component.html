@@ -1,1 +1,14 @@
-<p>listagem-visitas works!</p>
+<!-- listagem-visitas.component.html -->
+
+<div>
+    <h4>Visitas Concluídas</h4>
+    <ul>
+      <li *ngFor="let visita of visitasConcluidas">{{ visita.nomeEmpresa }} - {{ visita.dataVisita }}</li>
+    </ul>
+    <hr>
+    <h4>Visitas Pendentes</h4>
+    <ul>
+      <li *ngFor="let visita of visitasPendentes">{{ visita.nomeEmpresa }} - {{ visita.dataVisita }}</li>
+    </ul>
+</div>
+  

@@ -6,13 +6,17 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import routes from './app.routes';
 import { RegistroComponent } from './components/registro/registro.component';
 import { TelaLoginComponent } from './components/tela-login/tela-login.component';
+import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
+import { ListagemVisitasComponent } from './components/listagem-visitas/listagem-visitas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     RegistroComponent,
-    TelaLoginComponent
+    TelaLoginComponent,
+    CadastroVisitasComponent,
+    ListagemVisitasComponent
   ],
   imports: [
     BrowserModule,
