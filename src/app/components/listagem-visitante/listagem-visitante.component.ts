@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { VisitanteService } from '@app/services/visitante-service.service';
 
-
 @Component({
   selector: 'app-listagem-visitantes',
   templateUrl: './listagem-visitantes.component.html',
-  styleUrls: ['./listagem-visitantes.component.css']
+  styleUrls: ['./listagem-visitantes.component.scss']
 })
-export class ListagemVisiatantesComponent implements OnInit {
-  visitante : any[] = [];
+export class ListagemVisitantesComponent implements OnInit {
+  visitantes: any[] = [];
 
   constructor(private visitanteService: VisitanteService) {}
 
   ngOnInit(): void {
-    this.visitante = this.visitanteService.obterVisitantes();
+    this.visitantes = this.visitanteService.obterVisitantes();
   }
 }

@@ -1,5 +1,10 @@
+
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { VisitaService } from '@app/services/visita-service.service';
+
 
 @Component({
   selector: 'app-cadastro-visitas',
@@ -11,11 +16,22 @@ export class CadastroVisitasComponent implements OnInit {
   estados: string[] = []; // Array para armazenar os estados
   cidades: string[] = []; // Array para armazenar as cidades
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private visitaService: VisitaService) { }
+
+  redirectToCadastroVisitantes(visitaId: number): void {
+    this.router.navigateByUrl(`/cadastro-visitantes?visitaId=${visitaId}`);
+  }
 
   ngOnInit(): void {
     this.initializeForm();
     this.loadEstados(); // Método para carregar os estados
+    this.route.queryParams.subscribe(params => {
+      const visitaId = params['visitaId'];
+    });
   }
 
   initializeForm(): void {
@@ -30,12 +46,10 @@ export class CadastroVisitasComponent implements OnInit {
   }
 
   loadEstados(): void {
-    // Simulação de carga dos estados (substitua com sua lógica real)
     this.estados = ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia'];
   }
 
   loadCidadesPorEstado(estadoSelecionado: string): void {
-    // Simulação de carga das cidades com base no estado selecionado (substitua com sua lógica real)
     switch (estadoSelecionado) {
       case 'São Paulo':
         this.cidades = ['São Paulo', 'Campinas', 'Santo André'];
@@ -55,7 +69,30 @@ export class CadastroVisitasComponent implements OnInit {
     }
   }
 
+  cadastrarVisita(): void {
+    this.visitaService.cadastrarVisita(this.visitaForm.value).subscribe(
+      (response: any) => {
+        const visitaId = response.id;
+        this.redirectToCadastroVisitantes(visitaId);
+      },
+      (error: any) => {
+        console.error('Erro ao cadastrar visita', error);
+      }
+    );
+  }
+
   onSubmit(): void {
-    // Implemente o código para salvar a visita
+    if (this.visitaForm.valid) {
+      const visita = this.visitaForm.value;
+      this.visitaService.cadastrarVisita(visita).subscribe(
+        (response) => {
+          const link = response.link;
+          this.router.navigate(['/sucesso'], { state: { link } });
+        },
+        (error) => {
+          console.error('Erro ao cadastrar visita:', error);
+        }
+      );
+    }
   }
 }
