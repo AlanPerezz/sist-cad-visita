@@ -1,1 +1,9 @@
-<p>cadastro-visitante works!</p>
+<form (submit)="cadastrarVisitante()">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required><br>
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf" name="cpf" required><br>
+    <!-- Outros campos como e-mail, telefone, etc. -->
+    <button type="submit">Cadastrar</button>
+</form>
+  

@@ -9,6 +9,7 @@ import { TelaLoginComponent } from './components/tela-login/tela-login.component
 import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
 import { ListagemVisitasComponent } from './components/listagem-visitas/listagem-visitas.component';
 import { CadastroVisitanteComponent } from './components/cadastro-visitante/cadastro-visitante.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { CadastroVisitanteComponent } from './components/cadastro-visitante/cada
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

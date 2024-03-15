@@ -1,42 +1,42 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-          <h3 class="text-center mb-5">Cadastro de Visita</h3>
-          <form>
-            <div class="form-group">
-              <label for="nomeEmpresa">Nome da Empresa</label>
-              <input type="text" class="form-control" id="nomeEmpresa" name="nomeEmpresa">
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="estado">Estado</label>
-                <select class="form-control" id="estado" name="estado"></select>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="cidade">Cidade</label>
-                <select class="form-control" id="cidade" name="cidade"></select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="dataVisita">Data da Visita</label>
-              <input type="date" class="form-control" id="dataVisita" name="dataVisita">
-            </div>
-            <div class="form-group">
-              <label for="dataLimiteCadastro">Data Limite de Cadastro</label>
-              <input type="date" class="form-control" id="dataLimiteCadastro" name="dataLimiteCadastro">
-            </div>
-            <div class="form-group">
-              <label for="quantidadePessoas">Quantidade de Pessoas</label>
-              <input type="number" class="form-control" id="quantidadePessoas" name="quantidadePessoas">
-            </div>
-            <div class="text-center mt-3">
-              <button type="submit" class="btn btn-orange">Cadastrar Visita</button>
-            </div>
-          </form>
+<div class="container mt-4 card-body p-4">
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card p-3" style="width: 340px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px;">
+      <h4 class="text-center mb-5">Cadastro de Visita</h4>
+      <form [formGroup]="visitaForm" (submit)="onSubmit()">
+        <div class="form-group">
+          <label for="nomeEmpresa">Nome da Empresa:</label>
+          <input type="text" class="form-control" id="nomeEmpresa" name="nomeEmpresa" formControlName="nomeEmpresa" required>
         </div>
-      </div>
+        <div class="form-group">
+          <label for="estado">Estado:</label>
+          <select class="form-control" id="estado" name="estado" formControlName="estado" (change)="loadCidadesPorEstado($event.target.value)" required>
+            <option value="" disabled selected>Selecione o estado</option>
+            <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cidade">Cidade:</label>
+          <select class="form-control" id="cidade" name="cidade" formControlName="cidade" required>
+            <option value="" disabled selected>Selecione a cidade</option>
+            <option *ngFor="let cidade of cidades" [value]="cidade">{{cidade}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dataVisita">Data da Visita:</label>
+          <input type="date" class="form-control" id="dataVisita" name="dataVisita" formControlName="dataVisita" required>
+        </div>
+        <div class="form-group">
+          <label for="dataLimiteCadastro">Data Limite de Cadastro:</label>
+          <input type="date" class="form-control" id="dataLimiteCadastro" name="dataLimiteCadastro" formControlName="dataLimiteCadastro" required>
+        </div>
+        <div class="form-group">
+          <label for="quantidadePessoas">Quantidade de Pessoas:</label>
+          <input type="number" class="form-control" id="quantidadePessoas" name="quantidadePessoas" formControlName="quantidadePessoas" required>
+        </div>
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-orange">Cadastrar Visita</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

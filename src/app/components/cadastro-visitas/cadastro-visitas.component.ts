@@ -7,36 +7,55 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./cadastro-visitas.component.scss']
 })
 export class CadastroVisitasComponent implements OnInit {
-  visitaForm: FormGroup;
+  visitaForm!: FormGroup; // Adiciona '!' para indicar que será inicializado no ngOnInit
+  estados: string[] = []; // Array para armazenar os estados
+  cidades: string[] = []; // Array para armazenar as cidades
 
-  constructor(private fb: FormBuilder){
-    this.visitaForm = this.fb.group({
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
+    this.loadEstados(); // Método para carregar os estados
+  }
+
+  initializeForm(): void {
+    this.visitaForm = this.formBuilder.group({
       nomeEmpresa: ['', Validators.required],
       estado: ['', Validators.required],
       cidade: ['', Validators.required],
-      dataVisita: ['', [Validators.required, this.anoNaoPodeTerMaisDeQuatroDigitos]],
+      dataVisita: ['', Validators.required],
       dataLimiteCadastro: ['', Validators.required],
       quantidadePessoas: ['', Validators.required]
     });
   }
-  
-  ngOnInit(): void {
+
+  loadEstados(): void {
+    // Simulação de carga dos estados (substitua com sua lógica real)
+    this.estados = ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia'];
   }
 
-  anoNaoPodeTerMaisDeQuatroDigitos(control: { value: string }): { [key: string]: boolean } | null {
-    const regex = /^\d{1,4}$/;
-    const valor = control.value;
-    if (!regex.test(valor)) {
-      return { anoInvalido: true };
+  loadCidadesPorEstado(estadoSelecionado: string): void {
+    // Simulação de carga das cidades com base no estado selecionado (substitua com sua lógica real)
+    switch (estadoSelecionado) {
+      case 'São Paulo':
+        this.cidades = ['São Paulo', 'Campinas', 'Santo André'];
+        break;
+      case 'Rio de Janeiro':
+        this.cidades = ['Rio de Janeiro', 'Niterói', 'Petrópolis'];
+        break;
+      case 'Minas Gerais':
+        this.cidades = ['Belo Horizonte', 'Uberlândia', 'Juiz de Fora'];
+        break;
+      case 'Bahia':
+        this.cidades = ['Salvador', 'Feira de Santana', 'Vitória da Conquista'];
+        break;
+      default:
+        this.cidades = [];
+        break;
     }
-    return null;
   }
 
   onSubmit(): void {
-    if (this.visitaForm.valid) {
-      console.log('Formulário válido. Submetido com sucesso.');
-    } else {
-      console.log('Formulário inválido. Verifique os campos.');
-    }
+    // Implemente o código para salvar a visita
   }
 }
