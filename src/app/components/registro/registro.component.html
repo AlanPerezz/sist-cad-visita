@@ -1,28 +1,111 @@
 <div class="container mt-4 card-body p-4">
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <div class="card p-3" style="width: 300px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h4 class="text-center mb-5">Crie sua conta</h4>
-            <form>
-                <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="nome" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="senha">Senha:</label>
-                    <input type="password" class="form-control" id="senha" name="senha" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmarSenha">Confirmar Senha:</label>
-                    <input type="password" class="form-control mb-2" id="confirmarSenha" name="confirmarSenha" required>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-orange">Registrar</button>
-                    </div>
-                </div>
-            </form>
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="height: 100vh"
+  >
+    <div
+      class="card p-3"
+      style="width: 300px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)"
+    >
+      <h4 class="text-center mb-5">Crie sua conta</h4>
+      <form [formGroup]="registerForm">
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            name="nome"
+            formControlName="fullName"
+            required
+          />
+          <small
+            *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
+            style="color: red"
+          >
+            <div *ngIf="fullName.errors?.['required']">Campo Obrigatório</div>
+            <div *ngIf="fullName.errors?.['pattern']">
+              Insira um nome válido
+            </div>
+          </small>
         </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            formControlName="email"
+            required
+          />
+          <small
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            style="color: red"
+          >
+            <div *ngIf="email.errors?.['required']">Campo Obrigatório</div>
+            <div *ngIf="email.errors?.['email']">E-mail inválido</div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="senha">Senha:</label>
+          <input
+            type="password"
+            class="form-control"
+            id="senha"
+            name="senha"
+            formControlName="password"
+            required
+          />
+          <small
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            style="color: red"
+          >
+            <div *ngIf="password.errors?.['required']">Campo Obrigatório</div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="confirmarSenha">Confirmar Senha:</label>
+          <input
+            type="password"
+            class="form-control mb-2"
+            id="confirmarSenha"
+            name="confirmarSenha"
+            formControlName="confirmPassword"
+            required
+          />
+          <small
+            *ngIf="
+              confirmPassword.invalid &&
+              (confirmPassword.dirty || confirmPassword.touched)
+            "
+            style="color: red"
+          >
+            <div *ngIf="confirmPassword.errors?.['required']">
+              Campo Obrigatório
+            </div>
+          </small>
+          <small
+            *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid"
+            >
+              As senhas devem ser idênticas
+          </small>
+          <div class="text-center">
+            <button
+              type="submit"
+              class="btn btn-orange"
+              [disabled]="registerForm.invalid"
+            >
+              Registrar
+            </button>
+            <div class="form-group text-center">
+              <a class="nav-link btn mt-3" [routerLink]="['/tela-login']"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

@@ -1,15 +1,12 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { VisitaService } from '@app/services/visita-service.service';
 
-
 @Component({
   selector: 'app-cadastro-visitas',
   templateUrl: './cadastro-visitas.component.html',
-  styleUrls: ['./cadastro-visitas.component.scss']
+  styleUrls: ['./cadastro-visitas.component.scss'],
 })
 export class CadastroVisitasComponent implements OnInit {
   visitaForm!: FormGroup; // Adiciona '!' para indicar que será inicializado no ngOnInit
@@ -20,7 +17,8 @@ export class CadastroVisitasComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private visitaService: VisitaService) { }
+    private visitaService: VisitaService
+  ) {}
 
   redirectToCadastroVisitantes(visitaId: number): void {
     this.router.navigateByUrl(`/cadastro-visitantes?visitaId=${visitaId}`);
@@ -29,7 +27,7 @@ export class CadastroVisitasComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.loadEstados(); // Método para carregar os estados
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const visitaId = params['visitaId'];
     });
   }
@@ -41,7 +39,7 @@ export class CadastroVisitasComponent implements OnInit {
       cidade: ['', Validators.required],
       dataVisita: ['', Validators.required],
       dataLimiteCadastro: ['', Validators.required],
-      quantidadePessoas: ['', Validators.required]
+      quantidadePessoas: ['', Validators.required],
     });
   }
 
