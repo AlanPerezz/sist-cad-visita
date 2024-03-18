@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { VisitaService } from '@app/services/visita-service.service';
+import { Visita } from '../listagem-visitas/visita.model';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-cadastro-visitas',
@@ -9,27 +12,21 @@ import { VisitaService } from '@app/services/visita-service.service';
   styleUrls: ['./cadastro-visitas.component.scss'],
 })
 export class CadastroVisitasComponent implements OnInit {
-  visitaForm!: FormGroup; // Adiciona '!' para indicar que será inicializado no ngOnInit
-  estados: string[] = []; // Array para armazenar os estados
-  cidades: string[] = []; // Array para armazenar as cidades
+  visitaForm!: FormGroup;
+  estados: string[] = [];
+  cidades: string[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
+    private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
     private visitaService: VisitaService
-  ) {}
-
-  redirectToCadastroVisitantes(visitaId: number): void {
-    this.router.navigateByUrl(`/cadastro-visitantes?visitaId=${visitaId}`);
-  }
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
-    this.loadEstados(); // Método para carregar os estados
-    this.route.queryParams.subscribe((params) => {
-      const visitaId = params['visitaId'];
-    });
+    this.loadEstados();
   }
 
   initializeForm(): void {
@@ -40,6 +37,7 @@ export class CadastroVisitasComponent implements OnInit {
       dataVisita: ['', Validators.required],
       dataLimiteCadastro: ['', Validators.required],
       quantidadePessoas: ['', Validators.required],
+      status: ['P']
     });
   }
 
@@ -68,29 +66,22 @@ export class CadastroVisitasComponent implements OnInit {
   }
 
   cadastrarVisita(): void {
-    this.visitaService.cadastrarVisita(this.visitaForm.value).subscribe(
-      (response: any) => {
-        const visitaId = response.id;
-        this.redirectToCadastroVisitantes(visitaId);
-      },
-      (error: any) => {
-        console.error('Erro ao cadastrar visita', error);
-      }
-    );
-  }
-
-  onSubmit(): void {
     if (this.visitaForm.valid) {
-      const visita = this.visitaForm.value;
+      const visita: Visita = this.visitaForm.value;
+      console.log('Dados da visita a serem enviados:', visita);
       this.visitaService.cadastrarVisita(visita).subscribe(
-        (response) => {
-          const link = response.link;
-          this.router.navigate(['/sucesso'], { state: { link } });
+        () => {
+          console.log('Visita cadastrada com sucesso!');
+          this.router.navigate(['/listagem']);
         },
         (error) => {
           console.error('Erro ao cadastrar visita:', error);
         }
       );
     }
+  }  
+
+  onSubmit(): void {
+    this.cadastrarVisita();
   }
 }

@@ -1,5 +1,4 @@
 export interface Visita {
-    id: number;
     nomeEmpresa: string;
     estado: string;
     cidade: string;
@@ -7,6 +6,6 @@ export interface Visita {
     dataLimiteCadastro: Date;
     quantidadePessoas: number;
     concluida: boolean;
-    status: 'Concluída' | 'Pendente';
+    status: 'C' | 'P';
   }
   
