@@ -13,6 +13,7 @@ import { CadastroVisitanteComponent } from './components/cadastro-visitante/cada
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

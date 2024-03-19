@@ -1,8 +1,9 @@
 import { Component, Inject, forwardRef, OnInit, importProvidersFrom } from '@angular/core';
 
 import { Visita } from './visita.model'; 
-import { VisitaService } from './visita.service';
+
 import { Router } from '@angular/router';
+import { VisitaService } from '@app/services/visita-service.service';
 
 @Component({
   selector: 'app-listagem-visitas',

@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Visita } from '../listagem-visitas/visita.model';
-import { Observable } from 'rxjs';
-import { VisitaService } from '../listagem-visitas/visita.service';
+import { VisitaService } from '@app/services/visita-service.service';
 
 
 @Component({
@@ -16,7 +15,6 @@ export class CadastroVisitasComponent implements OnInit {
   visitaForm!: FormGroup;
   estados: string[] = [];
   cidades: string[] = [];
-
   id = 0;
 
   constructor(
@@ -47,7 +45,8 @@ export class CadastroVisitasComponent implements OnInit {
       dataVisita: ['', Validators.required],
       dataLimiteCadastro: ['', Validators.required],
       quantidadePessoas: ['', Validators.required],
-      status: ['P']
+      status: ['P'],
+      visitaId: [0]
     });
   }
 
@@ -100,8 +99,26 @@ export class CadastroVisitasComponent implements OnInit {
         this.loadCidadesPorEstado(visitas.estado);
       });
   }
+
+  editarVisita(): void {
+    if (this.visitaForm.valid) {
+      const visita: Visita = this.visitaForm.value;
+      console.log(visita);
+      this.visitaService.editarVisita(visita).subscribe(
+        (response: any) => {
+          console.log('editou');
+          const visitaId = response.id
+          this.router.navigate(['/listagem']);
+        },
+        (error) => {
+          console.error('Erro ao editar visita:', error);
+        }
+      );
+    }
+  }
   
   onSubmit(): void {
-    this.cadastrarVisita();
+    // this.cadastrarVisita();
+    this.editarVisita();
   }
 }

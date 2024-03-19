@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { VisitaService } from './services/visita-service.service';
 import { Visita } from './components/listagem-visitas/visita.model';
+import { VisitaService } from './services/visita-service.service';
+
 
 
 @Component({
