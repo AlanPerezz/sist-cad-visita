@@ -19,4 +19,9 @@ export class VisitaService {
   cadastrarVisita(visita: Visita): Observable<any> {
     return this.http.post(this.url, visita);
   }
+
+  // salvarLink(visitaId: number, link: string): Observable<any> {
+  //   const body = {visitaId, link};
+  //   return this.http.post(`https://localhost:7078/api/salvarLink`,body);
+  // }
 }

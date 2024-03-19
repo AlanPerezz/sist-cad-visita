@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'cadastro', component: CadastroVisitasComponent },
   { path: 'sucesso' , component: SucessoComponent},
   { path: '**', redirectTo: '/cadastro', pathMatch: 'full'},
-  { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+  { path: '', redirectTo: 'listagem', pathMatch: 'full' },
+  { path: 'cadastro/:id', component: CadastroVisitasComponent }
 ];
 
 export default routes;

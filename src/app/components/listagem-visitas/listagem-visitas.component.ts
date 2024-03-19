@@ -1,7 +1,8 @@
-import { Component, Inject, forwardRef, OnInit } from '@angular/core';
+import { Component, Inject, forwardRef, OnInit, importProvidersFrom } from '@angular/core';
 
-import { Visita } from './visita.model'; // Verifique o caminho correto
+import { Visita } from './visita.model'; 
 import { VisitaService } from './visita.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listagem-visitas',
@@ -13,13 +14,16 @@ export class ListagemVisitasComponent implements OnInit {
   visitasConcluidas: Visita[] = [];
   visitasPendentes: Visita[] = [];
 
-  constructor(private visitaService: VisitaService) {}
+  constructor(
+    private visitaService: VisitaService,
+    private router: Router
+    ) {}
 
   ngOnInit(): void {
     this.getVisitas();
   }
 
-  getVisitas(): void {
+  getVisitas(visitaId:number = 0): void {
     this.visitaService.getVisitas()
       .subscribe((visitas: Visita[]) => {
         console.log(visitas)
@@ -28,4 +32,21 @@ export class ListagemVisitasComponent implements OnInit {
         this.visitasPendentes = this.visitas.filter(visita => visita.status === 'P');
       });
   }
+
+  excluirVisita(visitaId:number): void {
+    this.visitaService.excluirVisita(visitaId).subscribe(
+      () => {
+        console.log('Visita excluida com sucesso');
+        this.getVisitas(visitaId);
+      },
+      (error) => {
+        console.error('erro ao deletar a visita', error);
+      }
+    );
+  }
+  
+  editarVisita(visitaId: number): void {
+    this.router.navigateByUrl(`/cadastro?id=${visitaId}`);
+  }
+  
 }

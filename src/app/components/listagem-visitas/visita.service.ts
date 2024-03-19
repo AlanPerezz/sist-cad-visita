@@ -14,10 +14,17 @@ export class VisitaService {
   constructor(private http: HttpClient) { }
 
   getVisitas(): Observable<Visita[]> {
-    return this.http.get<Visita[]>('https://localhost:7078/api/visita');
+      return this.http.get<Visita[]>(`https://localhost:7078/api/visita`);
   }
 
+  getVisitasById(visitaId: number){
+    return this.http.get<Visita>(`https://localhost:7078/api/visita/${visitaId}`);
+  }
   cadastrarVisita(visita: Visita): Observable<any> {
     return this.http.post('https://localhost:7078/api/visita', visita);
+  }
+
+  excluirVisita(visitaId: number): Observable<any>{
+    return this.http.delete(`https://localhost:7078/api/visita/${visitaId}`);
   }
 }

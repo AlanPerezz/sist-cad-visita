@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { VisitaService } from '@app/services/visita-service.service';
-import { Visita } from '../listagem-visitas/visita.model';
 import { HttpClient } from '@angular/common/http';
+import { Visita } from '../listagem-visitas/visita.model';
+import { Observable } from 'rxjs';
+import { VisitaService } from '../listagem-visitas/visita.service';
 
 
 @Component({
@@ -16,17 +17,26 @@ export class CadastroVisitasComponent implements OnInit {
   estados: string[] = [];
   cidades: string[] = [];
 
+  id = 0;
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private visitaService: VisitaService
+    private visitaService: VisitaService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+
+    this.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id')) ?? 0;
     this.initializeForm();
     this.loadEstados();
+    console.log(this.id)
+    if(this.id !== 0){
+      this.getVisitas()
+    }
   }
 
   initializeForm(): void {
@@ -68,10 +78,11 @@ export class CadastroVisitasComponent implements OnInit {
   cadastrarVisita(): void {
     if (this.visitaForm.valid) {
       const visita: Visita = this.visitaForm.value;
-      console.log('Dados da visita a serem enviados:', visita);
+      console.log(visita);
       this.visitaService.cadastrarVisita(visita).subscribe(
-        () => {
-          console.log('Visita cadastrada com sucesso!');
+        (response: any) => {
+          console.log('cadastrou');
+          const visitaId = response.id
           this.router.navigate(['/listagem']);
         },
         (error) => {
@@ -79,8 +90,17 @@ export class CadastroVisitasComponent implements OnInit {
         }
       );
     }
-  }  
+  }
 
+  getVisitas(): void {
+    this.visitaService.getVisitasById(this.id)
+      .subscribe((visitas: Visita) => {
+        console.log(visitas)
+        this.visitaForm.patchValue(visitas);
+        this.loadCidadesPorEstado(visitas.estado);
+      });
+  }
+  
   onSubmit(): void {
     this.cadastrarVisita();
   }

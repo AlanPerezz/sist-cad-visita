@@ -7,4 +7,5 @@ public class Visita
     public DateTime DataVisita { get; set; }
     public DateTime DataLimiteCadastro { get; set; }
     public int QuantidadePessoas { get; set; }
+    public string Status { get; set; }
 }

@@ -1,4 +1,5 @@
 export interface Visita {
+    VisitaId: number;
     nomeEmpresa: string;
     estado: string;
     cidade: string;
