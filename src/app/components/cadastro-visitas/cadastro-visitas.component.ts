@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { Visita } from '../listagem-visitas/visita.model';
 import { VisitaService } from '@app/services/visita-service.service';
 
@@ -16,30 +15,55 @@ export class CadastroVisitasComponent implements OnInit {
   estados: string[] = [];
   cidades: string[] = [];
   id = 0;
+  editando: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute,
     private visitaService: VisitaService,
     private activatedRoute: ActivatedRoute
   ) { }
 
+  get nomeEmpresa() {
+    return this.visitaForm.controls['nomeEmpresa'];
+  }
+  
+  get estado() {
+    return this.visitaForm.controls['estado'];
+  }
+  
+  get cidade() {
+    return this.visitaForm.controls['cidade'];
+  }
+  
+  get dataVisita() {
+    return this.visitaForm.controls['dataVisita'];
+  }
+  
+  get dataLimiteCadastro() {
+    return this.visitaForm.controls['dataLimiteCadastro'];
+  }
+  
+  get quantidadePessoas() {
+    return this.visitaForm.controls['quantidadePessoas'];
+  }
+  
   ngOnInit(): void {
 
     this.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id')) ?? 0;
     this.initializeForm();
     this.loadEstados();
-    console.log(this.id)
+    
     if(this.id !== 0){
       this.getVisitas()
+      this.editandoVisita()
     }
-  }
 
+  }
+  
   initializeForm(): void {
     this.visitaForm = this.formBuilder.group({
-      nomeEmpresa: ['', Validators.required],
+      nomeEmpresa: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]],
       estado: ['', Validators.required],
       cidade: ['', Validators.required],
       dataVisita: ['', Validators.required],
@@ -77,11 +101,12 @@ export class CadastroVisitasComponent implements OnInit {
   cadastrarVisita(): void {
     if (this.visitaForm.valid) {
       const visita: Visita = this.visitaForm.value;
-      console.log(visita);
       this.visitaService.cadastrarVisita(visita).subscribe(
         (response: any) => {
-          console.log('cadastrou');
-          const visitaId = response.id
+          console.log(response.visitaId)
+          const visitaId = response.visitaId
+          const link = `https://localhost:7078/api/visita/${visitaId}`;
+          visita.link = link;
           this.router.navigate(['/listagem']);
         },
         (error) => {
@@ -107,7 +132,7 @@ export class CadastroVisitasComponent implements OnInit {
       this.visitaService.editarVisita(visita).subscribe(
         (response: any) => {
           console.log('editou');
-          const visitaId = response.id
+          const visitaId = response.visitaId
           this.router.navigate(['/listagem']);
         },
         (error) => {
@@ -116,9 +141,20 @@ export class CadastroVisitasComponent implements OnInit {
       );
     }
   }
+
+  editandoVisita(): void{
+    this.editando = true;
+  }
   
   onSubmit(): void {
-    // this.cadastrarVisita();
-    this.editarVisita();
+    
+    if(this.id !== 0){
+      console.log('CHAMOU O EDITAR')
+      this.editarVisita();
+    }else{
+      console.log('CHAMOU O CADASTRAR')
+      this.cadastrarVisita();
+    }
   }
 }
+

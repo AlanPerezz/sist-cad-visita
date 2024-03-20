@@ -9,5 +9,6 @@ export interface Visita {
     quantidadePessoas: number;
     concluida: boolean;
     status: 'C' | 'P';
+    link: string;
   }
   

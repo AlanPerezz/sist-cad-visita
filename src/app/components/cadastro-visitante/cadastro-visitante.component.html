@@ -1,8 +1,109 @@
-<form (submit)="cadastrarVisitante()">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required><br>
-    <label for="cpf">CPF</label>
-    <input type="text" id="cpf" name="cpf" required><br>
-    <!-- Outros campos como e-mail, telefone, etc. -->
-    <button type="submit">Cadastrar</button>
-</form>
+<div class="container mt-4 card-body p-4">
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="height: 100vh"
+  >
+    <div
+      class="card p-3"
+      style="width: 300px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)"
+    >
+      <h4 class="text-center mb-5">Cadastro de Visitantes</h4>
+      <form [formGroup]="visitanteForm">
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input
+            type="text"
+            placeholder="Nome"
+            class="form-control"
+            id="nome"
+            name="nome"
+            formControlName="nome"
+            required
+          />
+          <small
+            *ngIf="nome.invalid && (nome.dirty || nome.touched)"
+            style="color: red"
+          >
+            <div *ngIf="nome.errors?.['required']">Campo Obrigatório</div>
+            <div *ngIf="nome.errors?.['pattern']">
+              Insira um nome válido
+            </div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="cpf">CPF:</label>
+          <input
+            type="cpf"
+            mask="000.000.000-00"
+            placeholder="000.000.000-00"
+            class="form-control"
+            id="cpf"
+            name="cpf"
+            formControlName="cpf"
+            required
+          />
+          <small
+            *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)"
+            style="color: red"
+          >
+            <div *ngIf="cpf.errors?.['required']">Campo Obrigatório</div>
+            <div *ngIf="cpf.errors?.['pattern']">CPF inválido</div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input
+            type="email"
+            placeholder="exemplo@gmail.com"
+            class="form-control"
+            id="email"
+            name="email"
+            formControlName="email"
+            required
+          />
+          <small
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            style="color: red"
+          >
+            <div *ngIf="email.errors?.['required']">Campo Obrigatório</div>
+            <div *ngIf="email.errors?.['email']">E-mail inválido</div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="celular">Celular:</label>
+          <input
+            type="celular"
+            placeholder="(00)00000-0000"
+            mask="(00)00000-0000"
+            class="form-control"
+            id="celular"
+            name="celular"
+            formControlName="celular"
+            required
+          />
+          <small
+            *ngIf="celular.invalid && (celular.dirty || celular.touched)"
+            style="color: red"
+          >
+            <div *ngIf="celular.errors?.['required']">Campo Obrigatório</div>
+            <div *ngIf="celular.errors?.['pattern']">Número inválido</div>
+          </small>
+        </div>
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn btn-orange"
+            [disabled]="visitanteForm.invalid"
+          >
+            Cadastrar Visitante
+          </button>
+          <div class="form-group text-center">
+            <a class="nav-link btn mt-3" [routerLink]="['/listagem']"
+              >Listagem de Visitas</a
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

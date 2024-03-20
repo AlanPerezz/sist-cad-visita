@@ -12,6 +12,7 @@ import { ListagemVisitasComponent } from './components/listagem-visitas/listagem
 import { CadastroVisitanteComponent } from './components/cadastro-visitante/cadastro-visitante.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 @NgModule({
@@ -28,9 +29,12 @@ import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe
+
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

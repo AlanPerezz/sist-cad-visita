@@ -1,7 +1,5 @@
 import { Component, Inject, forwardRef, OnInit, importProvidersFrom } from '@angular/core';
-
 import { Visita } from './visita.model'; 
-
 import { Router } from '@angular/router';
 import { VisitaService } from '@app/services/visita-service.service';
 
