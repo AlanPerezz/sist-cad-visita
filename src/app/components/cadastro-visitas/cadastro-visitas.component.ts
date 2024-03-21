@@ -16,6 +16,7 @@ export class CadastroVisitasComponent implements OnInit {
   cidades: string[] = [];
   id = 0;
   editando: boolean = false;
+  visitaId: number | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,6 +58,9 @@ export class CadastroVisitasComponent implements OnInit {
     if(this.id !== 0){
       this.getVisitas()
       this.editandoVisita()
+      this.activatedRoute.params.subscribe(params => {
+        this.visitaId = params['id'];
+      });
     }
 
   }
@@ -74,6 +78,25 @@ export class CadastroVisitasComponent implements OnInit {
     });
   }
 
+  minDate(): string {
+    const now = new Date();
+    return now.toISOString().slice(0, 16);
+  }
+  
+  checkDateValidity(controlName: string): void {
+    const control = this.visitaForm.get(controlName);
+    if (control && control.value) {
+      const selectedDate = new Date(control.value);
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+      if (selectedDate < currentDate) {
+        control.setErrors({ dataPassada: true });
+      } else {
+        control.setErrors(null);
+      }
+    }
+  }
+  
   loadEstados(): void {
     this.estados = ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia'];
   }

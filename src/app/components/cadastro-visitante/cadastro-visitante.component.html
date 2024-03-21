@@ -8,7 +8,7 @@
       style="width: 300px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)"
     >
       <h4 class="text-center mb-5">Cadastro de Visitantes</h4>
-      <form [formGroup]="visitanteForm">
+      <form [formGroup]="visitanteForm" (submit)="onSubmit()">
         <div class="form-group">
           <label for="nome">Nome:</label>
           <input

@@ -30,5 +30,8 @@ export class VisitaService {
   editarVisita(visita: Visita): Observable<any> {
     return this.http.put('https://localhost:7078/api/visita', visita);
   }
-  
+
+  concluirVisita(visita: Visita): Observable<any> {
+    return this.http.put('https://localhost:7078/api/visita/concluir', visita);
+  }
 }

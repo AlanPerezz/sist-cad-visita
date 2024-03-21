@@ -15,7 +15,7 @@ export class ListagemVisitasComponent implements OnInit {
 
   constructor(
     private visitaService: VisitaService,
-    private router: Router
+    public router: Router
     ) {}
 
   ngOnInit(): void {
@@ -33,19 +33,50 @@ export class ListagemVisitasComponent implements OnInit {
   }
 
   excluirVisita(visitaId:number): void {
-    this.visitaService.excluirVisita(visitaId).subscribe(
-      () => {
-        console.log('Visita excluida com sucesso');
-        this.getVisitas(visitaId);
-      },
-      (error) => {
-        console.error('erro ao deletar a visita', error);
-      }
-    );
+    if(confirm('Tem certeza que deseja EXCLUIR esta visita?')){
+      this.visitaService.excluirVisita(visitaId).subscribe(
+        () => {
+          console.log('Visita excluida com sucesso');
+          this.getVisitas(visitaId);
+        },
+        (error) => {
+          console.error('erro ao deletar a visita', error);
+        }
+      );
+    }
+  }
+
+  redirectLink(visitaId: number){
+    this.router.navigateByUrl(`/cadastroVisitante?id=${visitaId}`);
+  }
+
+  concluirVisita(visita:Visita) : void {
+    if(confirm('Tem certeza que deseja CONCLUIR essa visita?')){
+      this.visitaService.concluirVisita(visita).subscribe(
+        () => {
+          console.log('Visita concluída com sucesso');
+          this.getVisitas(visita.VisitaId);
+        },
+        (error) => {
+          console.error('erro ao concluir a visita', error);
+        }
+      );
+    }
   }
   
   editarVisita(visitaId: number): void {
     this.router.navigateByUrl(`/cadastro?id=${visitaId}`);
+  }
+
+  copiarLink(visita: any): void {
+    visita.linkCopiado = true;
+    setTimeout(() => visita.linkCopiado = false, 2000);
+  }
+
+  verificarDataLimite(visita: any): boolean {
+    const dataLimite = new Date(visita.dataLimiteCadastro);
+    const hoje = new Date();
+    return hoje > dataLimite;
   }
   
 }

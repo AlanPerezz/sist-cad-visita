@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'cadastro', component: CadastroVisitasComponent },
   { path: 'sucesso' , component: SucessoComponent},
   { path: 'cadastro/:id', component: CadastroVisitasComponent },
-  { path: 'cadastroVisitante', component: CadastroVisitanteComponent },
+  { path: 'cadastroVisitante', component: CadastroVisitanteComponent},
   { path: '', redirectTo: 'listagem', pathMatch: 'full' },
   { path: '**', redirectTo: 'tela-login', pathMatch: 'full'}
 ];

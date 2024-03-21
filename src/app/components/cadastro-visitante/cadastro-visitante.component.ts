@@ -14,6 +14,8 @@ export class CadastroVisitanteComponent implements OnInit {
   visitanteForm!: FormGroup;
   id = 0;
   editando: boolean = false;
+  visitanteId: number | undefined;
+  visitaId: any;
 
   constructor(
     private visitanteService: VisitanteService,
@@ -41,11 +43,7 @@ export class CadastroVisitanteComponent implements OnInit {
     ngOnInit(): void {
       this.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id')) ?? 0;
       this.initializeForm();
-      
-      if(this.id !== 0){
-        this.getVisitas()
-        this.editandoVisitante()
-      }
+      this.editandoVisitante();
     }
 
   initializeForm(): void {
@@ -58,12 +56,13 @@ export class CadastroVisitanteComponent implements OnInit {
   }
 
   cadastrarVisitante(): void {
+    console.log("aaaaaaaaa")
     if (this.visitanteForm.valid) {
       const visitante: Visitante = this.visitanteForm.value;
+      visitante.VisitaId = this.visitaId;
       this.visitanteService.cadastrarVisitante(visitante).subscribe(
-        (response: any) => {
+        () => {
           console.log('cadastrou');
-          const visitanteId = response.id
           this.router.navigate(['/listagem']);
         },
         (error) => {
@@ -73,11 +72,11 @@ export class CadastroVisitanteComponent implements OnInit {
     }
   }
 
-  getVisitas(): void {
+  getVisitante(): void {
     this.visitanteService.getVisitantenteById(this.id)
-      .subscribe((visitas: Visitante) => {
-        console.log(visitas)
-        this.visitanteForm.patchValue(visitas);
+      .subscribe((visitantes: Visitante) => {
+        console.log(visitantes)
+        this.visitanteForm.patchValue(visitantes);
       });
   }
 
@@ -102,14 +101,8 @@ export class CadastroVisitanteComponent implements OnInit {
   }
 
   onSubmit(): void {
-    
-    if(this.id !== 0){
-      console.log('CHAMOU O EDITAR')
-      this.editarVisitante();
-    }else{
-      console.log('CHAMOU O CADASTRAR')
-      this.cadastrarVisitante();
-    }
+    console.log('CHAMOU O CADASTRAR');
+    this.cadastrarVisitante();
   }
 }
 

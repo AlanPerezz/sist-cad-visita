@@ -34,14 +34,16 @@
         </div>
         <div class="form-group">
           <label for="dataVisita">Data da Visita:</label>
-          <input type="datetime-local" class="form-control" id="dataVisita" name="dataVisita" formControlName="dataVisita" required>
+          <input type="datetime-local" class="form-control" id="dataVisita" name="dataVisita" formControlName="dataVisita" [min]="minDate()"
+          (change)="checkDateValidity('dataVisita')" required>
           <small *ngIf="dataVisita.invalid && (dataVisita.dirty || dataVisita.touched)" style="color: red">
             <div *ngIf="dataVisita.errors?.['required']">Campo Obrigatório</div>
           </small>
         </div>
         <div class="form-group">
           <label for="dataLimiteCadastro">Data Limite de Cadastro:</label>
-          <input type="datetime-local" class="form-control" id="dataLimiteCadastro" name="dataLimiteCadastro" formControlName="dataLimiteCadastro" required>
+          <input type="datetime-local" class="form-control" id="dataLimiteCadastro" name="dataLimiteCadastro" formControlName="dataLimiteCadastro" required [min]="minDate()"
+          (change)="checkDateValidity('dataVisita')">
           <small *ngIf="dataLimiteCadastro.invalid && (dataLimiteCadastro.dirty || dataLimiteCadastro.touched)" style="color: red">
             <div *ngIf="dataLimiteCadastro.errors?.['required']">Campo Obrigatório</div>
           </small>
