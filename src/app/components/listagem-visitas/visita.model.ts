@@ -1,4 +1,6 @@
 export interface Visita {
+    selecionada: boolean;
+    visitantes: any;
     id: any;
     VisitaId: number;
     nomeEmpresa: string;

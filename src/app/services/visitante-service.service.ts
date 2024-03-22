@@ -14,8 +14,12 @@ export class VisitanteService {
       return this.http.get<Visitante[]>(`https://localhost:7078/api/visitante`);
   }
 
-  getVisitantenteById(visitanteId: number){
+  getVisitanteById(visitanteId: number){
     return this.http.get<Visitante>(`https://localhost:7078/api/visitante/${visitanteId}`);
+  }
+
+  getAllVisitantesByVisitaID(visitaId: number){
+    return this.http.get<Visitante[]>(`https://localhost:7078/api/visitante/visita/${visitaId}`);
   }
 
   cadastrarVisitante(visitante: Visitante): Observable<any> {

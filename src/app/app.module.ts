@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import routes from './app.routes';
 import { RegistroComponent } from './components/registro/registro.component';
 import { TelaLoginComponent } from './components/tela-login/tela-login.component';
+import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
 import { ListagemVisitasComponent } from './components/listagem-visitas/listagem-visitas.component';
 import { CadastroVisitanteComponent } from './components/cadastro-visitante/cadastro-visitante.component';
+import { ListagemVisitantesComponent } from './components/listagem-visitantes/listagem-visitantes.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { CadastroVisitasComponent } from './components/cadastro-visitas/cadastro-visitas.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     CadastroVisitasComponent,
     ListagemVisitasComponent,
     CadastroVisitanteComponent,
+    ListagemVisitantesComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     HttpClientModule,
     ReactiveFormsModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
 
   ],
   providers: [provideNgxMask()],

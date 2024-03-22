@@ -1,10 +1,10 @@
 export interface Visitante {
-    VisitaId: number;
     id: any;
-    idVisitante: number;
+    VisitaId: number;
+    VisitanteId: number;
     nome: string;
     cpf: number;
     email: string;
-    celular: number;
+    celular: string;
   }
   

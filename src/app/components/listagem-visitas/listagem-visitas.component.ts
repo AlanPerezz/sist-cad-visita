@@ -1,7 +1,9 @@
-import { Component, Inject, forwardRef, OnInit, importProvidersFrom } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Visita } from './visita.model'; 
 import { Router } from '@angular/router';
 import { VisitaService } from '@app/services/visita-service.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-listagem-visitas',
@@ -12,6 +14,8 @@ export class ListagemVisitasComponent implements OnInit {
   visitas: Visita[] = [];
   visitasConcluidas: Visita[] = [];
   visitasPendentes: Visita[] = [];
+
+  collapseOpened = false;
 
   constructor(
     private visitaService: VisitaService,
@@ -77,6 +81,11 @@ export class ListagemVisitasComponent implements OnInit {
     const dataLimite = new Date(visita.dataLimiteCadastro);
     const hoje = new Date();
     return hoje > dataLimite;
+  }
+
+  openCollapse(id: number) {
+    console.log(`#collapse${id}`)
+    $(`#collapse${id}`).collapse('toggle');
   }
   
 }

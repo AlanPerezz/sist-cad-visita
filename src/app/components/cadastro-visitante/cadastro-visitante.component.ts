@@ -15,7 +15,7 @@ export class CadastroVisitanteComponent implements OnInit {
   id = 0;
   editando: boolean = false;
   visitanteId: number | undefined;
-  visitaId: any;
+  visitaId: number = 0;
 
   constructor(
     private visitanteService: VisitanteService,
@@ -41,9 +41,14 @@ export class CadastroVisitanteComponent implements OnInit {
     }
     
     ngOnInit(): void {
-      this.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id')) ?? 0;
+      this.visitaId = Number(this.activatedRoute.snapshot.queryParamMap.get('id')) ?? 0;
       this.initializeForm();
       this.editandoVisitante();
+
+      if(this.visitaId !== 0){
+        this.getVisitante();
+      }
+
     }
 
   initializeForm(): void {
@@ -52,14 +57,15 @@ export class CadastroVisitanteComponent implements OnInit {
       cpf: ['', [Validators.required, Validators.minLength(11), Validators.pattern(/^\d{11}$/)]],
       email: ['', [Validators.required, Validators.email]],
       celular: ['', [Validators.required, Validators.minLength(11), Validators.pattern(/^\d{11}$/)]],
+      visitanteId: [0],
+      visitaId: [0],
     })
   }
 
   cadastrarVisitante(): void {
-    console.log("aaaaaaaaa")
     if (this.visitanteForm.valid) {
-      const visitante: Visitante = this.visitanteForm.value;
-      visitante.VisitaId = this.visitaId;
+      const visitante = this.visitanteForm.value;
+      visitante.visitaId = this.visitaId;
       this.visitanteService.cadastrarVisitante(visitante).subscribe(
         () => {
           console.log('cadastrou');
@@ -73,7 +79,7 @@ export class CadastroVisitanteComponent implements OnInit {
   }
 
   getVisitante(): void {
-    this.visitanteService.getVisitantenteById(this.id)
+    this.visitanteService.getVisitanteById(this.visitaId)
       .subscribe((visitantes: Visitante) => {
         console.log(visitantes)
         this.visitanteForm.patchValue(visitantes);
@@ -81,12 +87,13 @@ export class CadastroVisitanteComponent implements OnInit {
   }
 
   editarVisitante(): void {
+    console.log("sdjiasjaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     if (this.visitanteForm.valid) {
       const visitante: Visitante = this.visitanteForm.value;
+      console.log(visitante);
       this.visitanteService.editarVisitante(visitante).subscribe(
-        (response: any) => {
+        () => {
           console.log('editou');
-          const visitaId = response.id
           this.router.navigate(['/listagem']);
         },
         (error) => {

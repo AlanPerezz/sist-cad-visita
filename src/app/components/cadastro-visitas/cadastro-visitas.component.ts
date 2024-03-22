@@ -124,6 +124,12 @@ export class CadastroVisitasComponent implements OnInit {
   cadastrarVisita(): void {
     if (this.visitaForm.valid) {
       const visita: Visita = this.visitaForm.value;
+      // if (visita.visitantes.length >= visita.quantidadePessoas) {
+      //   // Limite de visitantes atingido
+      //   alert('Limite de Visitantes atingido!');
+      //   return;
+      // }
+  
       this.visitaService.cadastrarVisita(visita).subscribe(
         (response: any) => {
           console.log(response.visitaId)
